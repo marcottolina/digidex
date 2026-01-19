@@ -1,0 +1,19 @@
+.footer{
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.navItem a {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 20px;
+    color: #242424 !important;
+}
+
+.navItem a.active {
+    color: #f90931 !important;
+}
+.navItem a:hover {
+    color: #ff4c60;
+}

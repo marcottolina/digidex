@@ -1,0 +1,18 @@
+/* Digidex.module.css */
+
+.btnView {
+    padding: 8px 20px;
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.active {
+    background-color: #333;
+    color: #fff;
+}
+
+.inactive {
+    background-color: #fff;
+    color: #333;
+}

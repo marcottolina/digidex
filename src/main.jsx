@@ -1,10 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { HashRouter } from 'react-router-dom'
+import { Auth0ProviderWithNavigate } from './auth/Auth0ProviderWithNavigate'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
-import App from './App.jsx'
+import App from './views/App/App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
+      <HashRouter>
+          <Auth0ProviderWithNavigate>
+              <App />
+          </Auth0ProviderWithNavigate>
+      </HashRouter>
+  </StrictMode>
 )
