@@ -1,0 +1,23 @@
+.container {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.name{
+    font-family: "Honk", system-ui;
+    font-size: 2rem !important;
+}
+
+.active{
+    font-weight: bold;
+    background-color: white;
+    color: black;
+}
+
+.inactive{
+    font-weight: bold;
+}
+
+.image{
+    min-width: 200px;
+}

@@ -32,20 +32,34 @@ export async function getMaxID() {
     return json.pageable.totalElements;
 }
 
-export async function getSimilarName(name){
-    if (!name || name.trim() === "") return [];
+export async function getDigimonFiltered(name, attribute) {
     try {
-        const res = await fetch(`${baseUrl}?name=${name}`);
+        // Initializing search parameters with pageSize = 100
+        const params = new URLSearchParams();
+        params.append("pageSize", "100");
+
+        // Add name to query if it's provided and not empty
+        if (name && name.trim() !== "") {
+            params.append("name", name);
+        }
+
+        // Add attribute to query if it's not "All" or empty
+        if (attribute && attribute !== "All" && attribute !== "") {
+            params.append("attribute", attribute);
+        }
+
+        // Fetching data with the combined parameters (name, attribute, pageSize)
+        const res = await fetch(`${baseUrl}?${params.toString()}`);
         const json = await res.json();
 
-        return json.content;
+        // Return the digimon list or an empty array to avoid .map() errors
+        return json.content || [];
 
-        return []; // Ritorna array vuoto se non c'è contenuto
     } catch (err) {
-        console.error("No names found", err);
+        // Log error and return empty array if fetch fails
+        console.error("Error during filtered search:", err);
         return [];
     }
 }
-
 
 

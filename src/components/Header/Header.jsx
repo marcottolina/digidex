@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import style from "./Header.module.css";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo.svg";
 import LoginButton from "../LoginButton/LoginButton";
 import LogoutButton  from "../LogoutButton/LogoutButton";
 import UserProfile from "../../UserProfile/UserProfile.jsx";
@@ -37,17 +38,17 @@ const Header = (props) => {
 
     return (
         <div className={style.navBar}>
-            <Navbar expand="md" light>
-                <div className={`container ${style.navbarContainer}`}>
+            <Navbar expand="md" dark>
+                <div className={`container d-flex  align-content-center py-3 ${style.navbarContainer}`}>
                     <NavLink to="/">
-                        ...
+                        <img src={logo} className={`${style.logo} img-fluid`} alt="logo" />
                     </NavLink>
-                    <NavbarToggler onClick={toggle} />
+                    <NavbarToggler onClick={toggle} className={style.toggleButton}/>
                     <Collapse isOpen={isOpen} navbar>
                         <Nav className="mr-auto" navbar>
                             {itemList}
                         </Nav>
-                        <Nav className="ms-auto d-flex align-items-center" navbar>
+                        <Nav className="d-flex flex-row mt-3 ms-auto" navbar>
                             <NavItem>
                                 <UserProfile />
                             </NavItem>

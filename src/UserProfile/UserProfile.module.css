@@ -1,0 +1,15 @@
+.container{
+    background-color: white;
+    border-radius: 1000px;
+}
+
+.image{
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    max-width: 40px;
+}
+
+.name{
+    font-weight: bold;
+    color: white;
+}

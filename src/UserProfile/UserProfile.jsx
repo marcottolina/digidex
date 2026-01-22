@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import style from './UserProfile.module.css';
 
 /**
  * User profile component that displays authenticated user information
@@ -24,37 +25,14 @@ const UserProfile = () => {
     }
 
     return (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '5px 10px',
-            borderRadius: '20px',
-            backgroundColor: 'rgba(0, 0, 0, 0.05)'
-        }}>
-            {user.picture && (
-                <img
-                    src={user.picture}
-                    alt={user.name || 'User'}
-                    style={{
-                        borderRadius: '50%',
-                        width: '32px',
-                        height: '32px',
-                        border: '2px solid #fff',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                    }}
-                />
+        <div className="d-flex justify-content-center align-items-center">
+            {user.name && (
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <span className={style.name}>{user.name}</span>
+                </div>
             )}
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2' }}>
-                <span style={{ fontWeight: '600', fontSize: '14px' }}>
-                    {user.name || user.email}
-                </span>
-                {user.name && user.email && (
-                    <span style={{ fontSize: '12px', color: '#666' }}>
-                        {user.email}
-                    </span>
-                )}
-            </div>
+
+
         </div>
     );
 };

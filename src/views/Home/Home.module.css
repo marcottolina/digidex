@@ -1,0 +1,20 @@
+.home {
+    background-color: white;
+    max-height: 500px;
+}
+
+.digidex{
+    color: orange;
+}
+
+.imageHeader{
+    max-height: 500px;
+}
+
+.button{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    cursor: pointer;
+    font-weight: bold;
+}

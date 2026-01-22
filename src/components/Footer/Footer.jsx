@@ -9,7 +9,7 @@ const Footer = (props) => {
 
     const itemList = navItems.map((item) => {
         return (
-            <NavItem key={item.url} className={style.navItem}>
+            <NavItem key={item.url} className={`${style.navItem}`}>
                 <NavLink to={item.url}
                          className="nav-link">
                     {item.name}
@@ -19,9 +19,21 @@ const Footer = (props) => {
     });
 
     return (
-        <div className={style.footer}>
-            {itemList}
+        <div className={style.wrapper}>
+            <div className={`${style.footer} p-5`}>
+                <div className="row">
+                    <div className="col-6">
+                        {itemList}
+                    </div>
+                    <div className="col-6">
+                        <p className="small">
+                            Created by <b>Marco Ottolina</b> for Web Application Exam course in UniMiB.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+
     )
 
 }

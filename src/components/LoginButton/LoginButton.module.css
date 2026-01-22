@@ -1,0 +1,12 @@
+.button {
+    color: white !important;
+    background-color: transparent;
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+.button:hover {
+    color: black !important;
+    background-color: orange;
+    border: 1px solid orange;
+}

@@ -40,90 +40,104 @@ const DigimonItem = (props) => {
 
     return(
 
-        <div className="border-top container-fluid py-3">
-            <div className="row">
-                {detailData.name &&
-                    <div className="col-3">
-                        <h4
-                            className="text-center">
-                            {detailData.name}
-                        </h4>
+        <NavLink to={`/digidex/${id}`}>
+            <div className={`${style.Item} container p-3 my-3`}>
+                <div className="row">
+                    {/* Name Column - kept for structure */}
+                    <div className="col-6">
+                        <div className="row">
+                            <h4 className={`${style.name} text-center col-lg-5`}>
+                                {detailData.name ? detailData.name : "-"}
+                            </h4>
+
+                            {/* Image Column */}
+                            <div className={`${style.containerImage} col-lg-7`}>
+                                {detailData.images?.[0] ? (
+                                    <img
+                                        className={style.image}
+                                        src={detailData.images[0].href}
+                                        alt={detailData.name}
+                                    />
+                                ) : (
+                                    <p className="text-center">Image not found</p>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                }
-                <div className={`${style.containerImage} col-3`}>
-                    {detailData.images?.[0] ? (
-                        <img
-                            className={style.image}
-                            src={detailData.images[0].href}
-                            alt={detailData.name}
-                        />
-                    ) : (
-                        <p>Image not found</p>
-                    )}
-                </div>
-                <div className="col-6">
-                    <div className="row">
-                        {detailData.levels && detailData.levels.length > 0 && (
-                            <div className="col-4">
+
+
+                    {/* Data Column */}
+                    <div className="col-6">
+                        <div className="row">
+                            {/* Levels Column */}
+                            <div className="col-6 col-md-4">
                                 <h6>Levels</h6>
-                                {detailData.levels.map((l) => (
-                                    <React.Fragment key={l.id}>
-                                        <span>{l.level}</span>
-                                        <br />
-                                    </React.Fragment>
-                                ))}
+                                {detailData.levels && detailData.levels.length > 0 ? (
+                                    detailData.levels.map((l) => (
+                                        <React.Fragment key={l.id}>
+                                            <span>{l.level}</span>
+                                            <br />
+                                        </React.Fragment>
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
                             </div>
-                        )}
-                        {detailData.types && detailData.types.length > 0 && (
-                            <div className="col-4">
+
+                            {/* Type Column - Fixed Structure */}
+                            <div className="col-6 col-md-4">
                                 <h6>Type</h6>
-                                {detailData.types.map((t) => (
-                                    <React.Fragment key={t.id}>
-                                        <span>{t.type}</span>
-                                        <br />
-                                    </React.Fragment>
-                                ))}
+                                {detailData.types && detailData.types.length > 0 ? (
+                                    detailData.types.map((t) => (
+                                        <React.Fragment key={t.id}>
+                                            <span>{t.type}</span>
+                                            <br />
+                                        </React.Fragment>
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
                             </div>
-                        )}
-                        {detailData.attributes && detailData.attributes.length > 0 && (
-                            <div className="col-4">
+
+                            {/* Attributes Column - Fixed Structure */}
+                            <div className="col-6 mt-3 mt-md-0 col-md-4">
                                 <h6>Attributes</h6>
-                                {detailData.attributes.map((a) => (
-                                    <React.Fragment key={a.id}>
-                                        <span>{a.attribute}</span>
-                                        <br />
-                                    </React.Fragment>
-                                ))}
+                                {detailData.attributes && detailData.attributes.length > 0 ? (
+                                    detailData.attributes.map((a) => (
+                                        <React.Fragment key={a.id}>
+                                            <span>{a.attribute}</span>
+                                            <br />
+                                        </React.Fragment>
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
                             </div>
-                        )}
-                        {/* Fields */}
-                        {detailData.fields && detailData.fields.length > 0 && (
+
+                            {/* Fields - Full width row */}
                             <div className="col-12 mt-3">
                                 <h6>Fields</h6>
-                                <div className="d-flex flex-wrap">
-                                    {detailData.fields.map((f, index) => (
-                                        <img
-                                            key={index}
-                                            src={f.image}
-                                            alt="Field icon"
-                                            className="me-3 mb-2"
-                                            style={{ width: '30px' }}
-                                        />
-                                    ))}
-                                </div>
+                                {detailData.fields && detailData.fields.length > 0 ? (
+                                    <div className="d-flex flex-wrap">
+                                        {detailData.fields.map((f, index) => (
+                                            <img
+                                                key={index}
+                                                src={f.image}
+                                                alt="Field icon"
+                                                className="me-3 mb-2"
+                                                style={{ width: '30px' }}
+                                            />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <span>-</span>
+                                )}
                             </div>
-                        )}
-                    </div>
-                    <div className="container col-12 d-flex justify-content-end mt-3">
-                        <NavLink to={`/digidex/${id}`}>
-                            <Button className="btn align d-flex">
-                                Visualize
-                            </Button>
-                        </NavLink>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </NavLink>
 
     )
 

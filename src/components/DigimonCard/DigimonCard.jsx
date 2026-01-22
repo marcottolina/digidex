@@ -38,66 +38,81 @@ const DigimonCard = (props) => {
     }
 
     return(
-            <Card className="m-2 h-100">
+        <NavLink to={`/digidex/${id}`}>
+            <Card className={`${style.Card} m-2 h-100`}>
                 <CardBody className="d-flex flex-column justify-content-between">
-                    {detailData.name &&
-                        <CardTitle>
-                            <h4
-                                className="text-center">
-                                {detailData.name}
-                            </h4>
-                        </CardTitle>
-                    }
-                    <div className={`${style.containerImage} mt-3`}>
+                    {/* Name Header - Always takes space */}
+                    <CardTitle>
+                        <h4 className={`${style.name} text-center`}>
+                            {detailData.name ? detailData.name : "-"}
+                        </h4>
+                    </CardTitle>
+
+                    {/* Image Section */}
+                    <div className={`${style.containerImage}`}>
                         {detailData.images?.[0] ? (
                             <img
-                                className="my-3 img-fluid w-100"
+                                className={style.cardImage}
                                 src={detailData.images[0].href}
                                 alt={detailData.name}
                             />
                         ) : (
-                            <p>Image not found</p>
+                            <p className="text-center py-5">Image not found</p>
                         )}
                     </div>
-                    <div className="container col-12 mt-3">
+
+                    {/* Info Grid - Main Row */}
+                    <div className={`${style.cardDetail} container col-12`}>
                         <div className="row">
-                            {detailData.levels && detailData.levels.length > 0 && (
-                                    <div className="col-4">
-                                        <h6>Levels</h6>
-                                        {detailData.levels.map((l) => (
-                                            <React.Fragment key={l.id}>
-                                                <span>{l.level}</span>
-                                                <br />
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                            )}
-                            {detailData.types && detailData.types.length > 0 && (
-                                <div className="col-4">
-                                    <h6>Type</h6>
-                                    {detailData.types.map((t) => (
+                            {/* Levels Section */}
+                            <div className="col-4">
+                                <h6>Levels</h6>
+                                {detailData.levels && detailData.levels.length > 0 ? (
+                                    detailData.levels.map((l) => (
+                                        <React.Fragment key={l.id}>
+                                            <span className="small">{l.level}</span>
+                                            <br />
+                                        </React.Fragment>
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
+                            </div>
+
+                            {/* Type Section */}
+                            <div className="col-4">
+                                <h6>Type</h6>
+                                {detailData.types && detailData.types.length > 0 ? (
+                                    detailData.types.map((t) => (
                                         <React.Fragment key={t.id}>
-                                            <span>{t.type}</span>
+                                            <span className="small">{t.type}</span>
                                             <br />
                                         </React.Fragment>
-                                    ))}
-                                </div>
-                            )}
-                            {detailData.attributes && detailData.attributes.length > 0 && (
-                                <div className="col-4">
-                                    <h6>Attributes</h6>
-                                    {detailData.attributes.map((a) => (
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
+                            </div>
+
+                            {/* Attributes Section */}
+                            <div className="col-4">
+                                <h6>Attributes</h6>
+                                {detailData.attributes && detailData.attributes.length > 0 ? (
+                                    detailData.attributes.map((a) => (
                                         <React.Fragment key={a.id}>
-                                            <span>{a.attribute}</span>
+                                            <span className="small">{a.attribute}</span>
                                             <br />
                                         </React.Fragment>
-                                    ))}
-                                </div>
-                            )}
-                            {/* Fields */}
-                            {detailData.fields && detailData.fields.length > 0 && (
-                                <div className="col-12 mt-3">
-                                    <h6>Fields</h6>
+                                    ))
+                                ) : (
+                                    <span>-</span>
+                                )}
+                            </div>
+
+                            {/* Fields Section - Full width under the others */}
+                            <div className="col-12 mt-3">
+                                <h6>Fields</h6>
+                                {detailData.fields && detailData.fields.length > 0 ? (
                                     <div className="d-flex flex-wrap">
                                         {detailData.fields.map((f, index) => (
                                             <img
@@ -109,21 +124,16 @@ const DigimonCard = (props) => {
                                             />
                                         ))}
                                     </div>
-                                </div>
-                            )}
+                                ) : (
+                                    <span>-</span>
+                                )}
+                            </div>
                         </div>
                     </div>
-
-                    <div className="container col-12 d-flex justify-content-end">
-                        <NavLink to={`/digidex/${id}`}>
-                            <Button className="btn align d-flex">
-                                Visualize
-                            </Button>
-                        </NavLink>
-                    </div>
-
                 </CardBody>
             </Card>
+        </NavLink>
+
     )
 
 }
