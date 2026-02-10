@@ -45,8 +45,11 @@ function Digidex() {
             const dati = await getDigimonFiltered("", "", page);
             //Set new Data
             setData(dati);
-            //Remove loading
-            setLoading(false);
+            //Remove loading after 200ms: the browser is faster than React.
+            //Using this, I can avoid the 404 error when the user clicks fast on a Digimon
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
         }
         //Start the function
         fetchData();
@@ -89,8 +92,9 @@ function Digidex() {
     //Handler login
     if(loading){
         return (
-            <div className="container w-100 w-100 position-absolute top-50 d-flex justify-content-center align-item-center">
+            <div className="container w-100 position-absolute top-0 d-flex justify-content-center align-item-center">
                 <Spinner />
+                <h1>Loading</h1>
             </div>
         )
     }

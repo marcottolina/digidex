@@ -10,8 +10,10 @@ export const Auth0ProviderWithNavigate = ({ children }) => {
     const domain = import.meta.env.VITE_AUTH0_DOMAIN;
     const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 
-    // Create the redirect URI
-    const redirectUri = window.location.origin + window.location.pathname;
+    // Create the redirect URI (also online)
+    const redirectUri = window.location.hostname === 'localhost'
+        ? window.location.origin
+        : 'https://marcottolina.github.io/digidex/';
 
     // Show error if configuration is missing
     if (!domain || !clientId) {

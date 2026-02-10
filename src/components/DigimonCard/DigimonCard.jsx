@@ -40,7 +40,7 @@ const DigimonCard = (props) => {
 
     return(
         //when the card is clicked the user visualize the correspondent Digimon detail in the apposite page
-        <NavLink to={`/digidex/${id}`}
+        <NavLink to={ id ? `/digidex/${id}` : 'digidex'}
                  onClick={(e) => {
                      //If there is not the id or the Web App is loading, block the click
                      if (!id || loading) {
