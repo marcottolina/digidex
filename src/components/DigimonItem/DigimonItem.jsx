@@ -41,7 +41,13 @@ const DigimonItem = (props) => {
 
     return(
         //when the item is clicked the user visualize the correspondent Digimon detail in the apposite page
-        <NavLink to={`/digidex/${id}`}>
+        <NavLink to={`/digidex/${id}`}
+                 onClick={(e) => {
+                     //If there is not the id or the Web App is loading, block the click
+                     if (!id || loading) {
+                         e.preventDefault();
+                     }
+                 }}>
             <div className={`${style.Item} container p-3 my-3`}>
                 <div className="row">
                     {/* Name Column */}

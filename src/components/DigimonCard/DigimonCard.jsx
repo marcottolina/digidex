@@ -40,7 +40,13 @@ const DigimonCard = (props) => {
 
     return(
         //when the card is clicked the user visualize the correspondent Digimon detail in the apposite page
-        <NavLink to={`/digidex/${id}`}>
+        <NavLink to={`/digidex/${id}`}
+                 onClick={(e) => {
+                     //If there is not the id or the Web App is loading, block the click
+                     if (!id || loading) {
+                         e.preventDefault();
+                     }
+                 }}>
             <Card className={`${style.Card} m-2 h-100`}>
                 <CardBody className="d-flex flex-column justify-content-between">
                     {/* Name Header */}
