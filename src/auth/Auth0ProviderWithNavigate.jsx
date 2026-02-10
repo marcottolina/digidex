@@ -6,11 +6,11 @@ import { Auth0Provider } from '@auth0/auth0-react';
  * For GitHub Pages deployment with nested base path
  */
 export const Auth0ProviderWithNavigate = ({ children }) => {
+    //Take domain and clientId by the environment
     const domain = import.meta.env.VITE_AUTH0_DOMAIN;
     const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 
-    // For HashRouter, Auth0 redirects to the base URL (without hash)
-    // React Router will then handle the hash-based navigation
+    // Create the redirect URI
     const redirectUri = window.location.origin + window.location.pathname;
 
     // Show error if configuration is missing

@@ -5,58 +5,83 @@ import { Navigate, NavLink, useParams } from "react-router-dom";
 import {Button, Spinner} from "reactstrap";
 
 const DigimonDetail = () => {
+    //Status Detail data
     const [DetailData, setDetailData] = useState({});
+    //Store the maxID that Digimon could have
     const [maxID, setMaxID] = useState(0);
+    //Loading status
     const [loading, setLoading] = useState(true);
 
+    //Take the parameter in the URL
     let { number } = useParams();
 
+    //Check if "number" is a real number
     if (!/^\d+$/.test(number)) {
+        //If it is not a number, go to 404 page
         return <Navigate to="/404" replace />;
     }
 
+    //Assign to var "id" the parsed parameter
     let id = parseInt(number);
 
+    //Calculate the maxID
     useEffect(() => {
-        let mounted = true;
+        const fetchMaxID = async () => {
+            //Get the maxID of the Digimon API to verify the possibility to go "next"
+            const max = await getMaxID();
+            //store maxID
+            setMaxID(max);
+        };
+        //Call function
+        fetchMaxID();
+    }, []);
 
+    //Take details from API
+    useEffect(() => {
+        //Take data from API
         const fetchData = async () => {
+            //Set loading = true
             setLoading(true);
+            //Get details data of Digimon
             const dettagli = await getDetailsById(id);
-            const totale = await getMaxID();
-
-            if (mounted) {
-                setDetailData(dettagli);
-                setMaxID(totale);
-                setLoading(false);
-            }
+            //Store detail data
+            setDetailData(dettagli);
+            //Set loading = false
+            setLoading(false);
         };
 
+        //Call function
         fetchData();
-
-        return () => {
-            mounted = false;
-        };
     }, [id]);
 
+    //Handler loading
     if (loading) {
         return (
             <div className="container d-flex justify-content-center align-items-center" style={{height: '50vh'}}>
-                <Spinner />
+                <Spinner color="light"/>
             </div>
         );
     }
 
-    // Cerco la descrizione inglese (più sicuro dell'indice fisso)
+    //Handler maxID:
+    //if the number in the URL is bigger than the maxID,
+    //or id < 1 (first Digimon id)
+    //go to 404 page
+    if (id > maxID || id < 1){
+        return <Navigate to="/404" replace />;
+    }
+
+    //Take the english description
     const englishDesc = DetailData.descriptions?.find(d => d.language === "en_us")?.description;
 
     return (
         <div className="container">
             <div className="row">
 
-                {/* Navigazione */}
+                {/* Navigation */}
                 <div className="container mt-3">
                     <div className="d-flex justify-content-between">
+                        {/* Handler prev */}
                         {id > 1 ? (
                                 <NavLink to={`/digidex/${id - 1}`}>
                                     <Button className={`${style.active}`}>
@@ -64,11 +89,12 @@ const DigimonDetail = () => {
                                     </Button>
                                 </NavLink>
                             ) : (
-                                <Button className={`${style.inactive}`} disabled>
+                                <Button className={`${style.inactive}`}>
                                     &lt; Prev
                                 </Button>
                             )
                         }
+                        {/* Handler next */}
                         {id < maxID ? (
                             <NavLink to={`/digidex/${id + 1}`}>
                                 <Button className={`${style.active}`}>
@@ -76,7 +102,7 @@ const DigimonDetail = () => {
                                 </Button>
                             </NavLink>
                         ) : (
-                            <Button className={`${style.inactive}`} disabled>
+                            <Button className={`${style.inactive}`}>
                                 Next &gt;
                             </Button>
                         )
@@ -87,12 +113,12 @@ const DigimonDetail = () => {
 
             <div className={`row p-5 mt-5 ${style.container}`}>
 
-                {/* Titolo */}
+                {/* Name (title) */}
                 <div className={`col-12 text-center ${style.name}`}>
                     <h2>{DetailData.name}</h2>
                 </div>
 
-                {/* Immagine */}
+                {/* Image */}
                 <div className="col-md-5 mt-5 text-center">
                     {DetailData.images?.[0] ? (
                         <img
@@ -105,7 +131,7 @@ const DigimonDetail = () => {
                     )}
                 </div>
 
-                {/* Dettagli Tecnici */}
+                {/* Details */}
                 <div className="col-md-7 mt-5">
                     <div className="row">
                         {/* Levels */}
@@ -174,7 +200,7 @@ const DigimonDetail = () => {
                         )}
                     </div>
 
-                    {/* Descrizione */}
+                    {/* Description */}
                     <div className="col-12 mt-5">
                         <h5>Description</h5>
                         {englishDesc ? (

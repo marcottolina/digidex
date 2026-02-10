@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from 'reactstrap';
+import {Button, Spinner} from 'reactstrap';
 import style from './LogoutButton.module.css';
 
 /**
@@ -18,13 +18,11 @@ const LogoutButton = () => {
     // Show loading state
     if (isLoading) {
         return (
-            <Button disabled>
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Loading...
-            </Button>
+            <Spinner color="light"></Spinner>
         );
     }
 
+    //Handler logout
     const handleLogout = () => {
         // Redirect back to the current page after logout
         logout({

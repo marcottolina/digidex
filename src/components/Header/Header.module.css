@@ -5,6 +5,14 @@
     z-index: 1000;
 }
 
+.buttonClose{
+    background-color: transparent !important;
+    border: transparent !important;
+    pointer-events: none !important;
+    font-weight: bold !important;
+    margin-top: 2px;
+}
+
 /*!* Rule added because of update to reactstrap 9.x *!*/
 .navbarContainer {
     display: flex !important;
@@ -41,5 +49,4 @@
 
 .toggleButton{
     color: white !important;
-    background-color: white !important;
 }

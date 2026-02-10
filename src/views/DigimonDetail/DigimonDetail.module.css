@@ -16,6 +16,7 @@
 
 .inactive{
     font-weight: bold;
+    cursor: not-allowed !important;
 }
 
 .image{

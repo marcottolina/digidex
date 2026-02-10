@@ -1,35 +1,36 @@
 import React, {useEffect, useState} from "react";
 import {getDetailsById} from "../../utility/Utility.js";
-import {Button, CardTitle, Spinner} from "reactstrap";
+import {Spinner} from "reactstrap";
 import style from "./DigimonItem.module.css";
 import {NavLink} from "react-router-dom";
 
 const DigimonItem = (props) => {
 
+    //Get loading status
     const[loading, setLoading] = useState(true);
+    //Digimon detail data
     const[detailData, setDetailData] = useState({});
+    //Extrapolated props
     const {id} = props;
 
+    //Load data every time the id changes
     useEffect(() => {
-        let mounted = true;
-
+        //Get data from API
         const fetchData = async () => {
+            //Set loading to true
             setLoading(true);
+            //Get Digimon details with call
             const dettagli = await getDetailsById(id);
-
-            if (mounted) {
-                setDetailData(dettagli);
-                setLoading(false);
-            }
+            //Store detail data
+            setDetailData(dettagli);
+            //Remove loading
+            setLoading(false);
         };
-
+        //Call the function
         fetchData();
+    }, [id]);
 
-        return () => {
-            mounted = false;
-        };
-    }, []);
-
+    //Handler loading
     if (loading) {
         return (
             <div className="container d-flex justify-content-center align-items-center" style={{height: '50vh'}}>
@@ -39,11 +40,11 @@ const DigimonItem = (props) => {
     }
 
     return(
-
+        //when the item is clicked the user visualize the correspondent Digimon detail in the apposite page
         <NavLink to={`/digidex/${id}`}>
             <div className={`${style.Item} container p-3 my-3`}>
                 <div className="row">
-                    {/* Name Column - kept for structure */}
+                    {/* Name Column */}
                     <div className="col-6">
                         <div className="row">
                             <h4 className={`${style.name} text-center col-lg-5`}>
@@ -84,7 +85,7 @@ const DigimonItem = (props) => {
                                 )}
                             </div>
 
-                            {/* Type Column - Fixed Structure */}
+                            {/* Type Column */}
                             <div className="col-6 col-md-4">
                                 <h6>Type</h6>
                                 {detailData.types && detailData.types.length > 0 ? (
@@ -99,7 +100,7 @@ const DigimonItem = (props) => {
                                 )}
                             </div>
 
-                            {/* Attributes Column - Fixed Structure */}
+                            {/* Attributes Column */}
                             <div className="col-6 mt-3 mt-md-0 col-md-4">
                                 <h6>Attributes</h6>
                                 {detailData.attributes && detailData.attributes.length > 0 ? (
@@ -114,7 +115,7 @@ const DigimonItem = (props) => {
                                 )}
                             </div>
 
-                            {/* Fields - Full width row */}
+                            {/* Fields */}
                             <div className="col-12 mt-3">
                                 <h6>Fields</h6>
                                 {detailData.fields && detailData.fields.length > 0 ? (

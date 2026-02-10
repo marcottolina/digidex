@@ -4,6 +4,15 @@
     min-height: 20dvh; /* Occupa almeno tutto lo schermo */
 }
 
+.buttonClose{
+    background-color: transparent !important;
+    border: transparent !important;
+    pointer-events: none !important;
+    font-weight: bold !important;
+    margin-top: 2px;
+    padding: 0;
+}
+
 .footer{
     width: 100%;
     background-color: black;

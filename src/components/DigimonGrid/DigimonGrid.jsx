@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import DigimonCard from "../DigimonCard/DigimonCard.jsx"
 
 const DigimonGrid = (props) => {
-
+    //Extrapolated props
     const {dati, col} = props;
-
+    //Create all card, with an id, based on the passed data
     const allCards = dati.map((digimon) => {
         return (
             <div key={digimon.id} className="col">
@@ -15,8 +15,9 @@ const DigimonGrid = (props) => {
         )
     })
 
+    //Render the responsive grid layout using Bootstrap row-cols classes
     return (
-        <div className={`row 
+        <div className={`p-3 row 
                 row-cols-${col.xs}
                 row-cols-sm-${col.sm}
                 row-cols-md-${col.md}

@@ -1,6 +1,19 @@
+//BaseUrl, that is present in each call
 const baseUrl = 'https://digi-api.com/api/v1/digimon';
 
-// Esportiamo le funzioni così puoi importarle nei componenti
+/**
+ * Retrieves the full details of a specific Digimon given its unique ID.
+ * The API call returns a JSON object containing:
+ * - name: The Digimon's name (string)
+ * - images: An array of image objects with href links
+ * - levels: An array of evolutionary levels
+ * - types: An array of Digimon types
+ * - attributes: An array of attributes (Vaccine, Virus, etc.)
+ * - fields: An array of icons and names for digital fields
+ * - descriptions: An array of descriptions in various languages
+ * Return the detail object or null if the request fails
+ */
+
 export async function getDetailsById(id) {
     try {
         const res = await fetch(`${baseUrl}/${id}`);
@@ -11,32 +24,37 @@ export async function getDetailsById(id) {
     }
 }
 
-export async function getDigimonList(num) {
-    try {
-        const res = await fetch(`${baseUrl}?pageSize=${num}`);
-        const json = await res.json();
-        // L'API di Digimon mette l'elenco dentro la chiave "content"
-        return json.content;
-    } catch (err) {
-        console.error("Error in List:", err);
-        return [];
-    }
-}
-
+/**
+ * Fetches the total count of Digimon available in the database.
+ * This value is used to set the upper boundary for navigation
+ * and prevent "Next" button clicks beyond the last existing ID.
+ * Returns the total number of Digimon elements.
+ */
 export async function getMaxID() {
     const res = await fetch(baseUrl);
     const json = await res.json();
-
     console.log("Total Digimon in page:", json.pageable.totalElements);
-
     return json.pageable.totalElements;
 }
 
-export async function getDigimonFiltered(name, attribute) {
+
+/**
+ * Fetches a paginated list of Digimon filtered by name and attribute.
+ * This function builds a dynamic query string based on provided filters:
+ * - name: Filters by Digimon name (partial matches).
+ * - attribute: Filters by type (Vaccine, Virus, etc.).
+ * - page: Manages pagination (defaults to 0).
+ * @param name - The search string for the Digimon name.
+ * @param {string} attribute - The attribute category to filter by.
+ * @param {number} page - The current page index for the API request.
+ * @returns {Promise<Array>} A promise that resolves to an array of Digimon objects.
+ */
+export async function getDigimonFiltered(name, attribute, page = 0) {
     try {
-        // Initializing search parameters with pageSize = 100
+        // Initializing search parameters with pageSize = 20
         const params = new URLSearchParams();
-        params.append("pageSize", "100");
+        params.append("pageSize", "20");
+        params.append("page", page);
 
         // Add name to query if it's provided and not empty
         if (name && name.trim() !== "") {

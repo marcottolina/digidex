@@ -5,30 +5,31 @@ import {Button, Card, CardBody, CardGroup, CardTitle, Spinner} from "reactstrap"
 import {NavLink} from "react-router-dom";
 
 const DigimonCard = (props) => {
+    //Get loading status
     const[loading, setLoading] = useState(true);
+    //Digimon detail data
     const[detailData, setDetailData] = useState({});
+    //Extrapolated props
     const {id} = props;
 
+    //Load data every time the id changes
     useEffect(() => {
-        let mounted = true;
-
+        //Get data from API
         const fetchData = async () => {
+            //Set loading to true
             setLoading(true);
+            //Get Digimon details with call
             const dettagli = await getDetailsById(id);
-
-            if (mounted) {
-                setDetailData(dettagli);
-                setLoading(false);
-            }
+            //Store detail data
+            setDetailData(dettagli);
+            //Remove loading
+            setLoading(false);
         };
-
+        //Call the function
         fetchData();
+    }, [id]);
 
-        return () => {
-            mounted = false;
-        };
-    }, []);
-
+    //Handler loading
     if (loading) {
         return (
             <div className="container d-flex justify-content-center align-items-center" style={{height: '50vh'}}>
@@ -38,10 +39,11 @@ const DigimonCard = (props) => {
     }
 
     return(
+        //when the card is clicked the user visualize the correspondent Digimon detail in the apposite page
         <NavLink to={`/digidex/${id}`}>
             <Card className={`${style.Card} m-2 h-100`}>
                 <CardBody className="d-flex flex-column justify-content-between">
-                    {/* Name Header - Always takes space */}
+                    {/* Name Header */}
                     <CardTitle>
                         <h4 className={`${style.name} text-center`}>
                             {detailData.name ? detailData.name : "-"}
@@ -61,7 +63,7 @@ const DigimonCard = (props) => {
                         )}
                     </div>
 
-                    {/* Info Grid - Main Row */}
+                    {/* Info Grid */}
                     <div className={`${style.cardDetail} container col-12`}>
                         <div className="row">
                             {/* Levels Section */}
@@ -109,7 +111,7 @@ const DigimonCard = (props) => {
                                 )}
                             </div>
 
-                            {/* Fields Section - Full width under the others */}
+                            {/* Fields Section */}
                             <div className="col-12 mt-3">
                                 <h6>Fields</h6>
                                 {detailData.fields && detailData.fields.length > 0 ? (

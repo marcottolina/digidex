@@ -8,6 +8,7 @@ import './index.css'
 import App from './views/App/App.jsx'
 
 createRoot(document.getElementById('root')).render(
+    //Wrap the entire project with HashRouter and Auth0 providers
   <StrictMode>
       <HashRouter>
           <Auth0ProviderWithNavigate>
