@@ -25,9 +25,13 @@ const LogoutButton = () => {
     //Handler logout
     const handleLogout = () => {
         // Redirect back to the current page after logout
+        const logoutUri = window.location.hostname === 'localhost'
+            ? window.location.origin
+            : 'https://marcottolina.github.io/digidex/';
+
         logout({
             logoutParams: {
-                returnTo: window.location.origin + window.location.pathname
+                returnTo: logoutUri
             }
         });
     };

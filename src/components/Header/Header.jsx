@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import LoginButton from "../LoginButton/LoginButton";
 import LogoutButton  from "../LogoutButton/LogoutButton";
-import UserProfile from "../../UserProfile/UserProfile.jsx";
+import UserProfile from "../UserProfile/UserProfile.jsx";
 import { useAuth0 } from '@auth0/auth0-react';
 
 import {
