@@ -64,10 +64,11 @@ const DigimonDetail = () => {
     }
 
     //Handler maxID:
-    //if the number in the URL is bigger than the maxID,
-    //or id < 1 (first Digimon id)
-    //go to 404 page
-    if (id > maxID || id < 1){
+    //We must ensure maxID has been successfully fetched (maxID > 0)
+    //before performing the validation. This prevents a race condition where
+    //a valid ID (e.g., 1) is incorrectly flagged as "out of bounds" while
+    //maxID is still at its initial default state of 0.
+    if (maxID > 0 && (id > maxID || id < 1)) {
         return <Navigate to="/404" replace />;
     }
 

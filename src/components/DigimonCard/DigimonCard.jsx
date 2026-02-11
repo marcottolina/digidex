@@ -33,7 +33,7 @@ const DigimonCard = (props) => {
     if (loading) {
         return (
             <div className="container d-flex justify-content-center align-items-center" style={{height: '50vh'}}>
-                <Spinner />
+                <Spinner color="light"/>
             </div>
         );
     }
