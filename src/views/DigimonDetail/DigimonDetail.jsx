@@ -112,7 +112,7 @@ const DigimonDetail = () => {
                 </div>
             </div>
 
-            <div className={`row p-3 p-md-5 m-1 m-md-0 mt-5 ${style.container}`}>
+            <div className={`row p-3 p-md-5 mx-1 mx-md-0 mt-5 ${style.container}`}>
 
                 {/* Name (title) */}
                 <div className={`col-12 text-center ${style.name}`}>
