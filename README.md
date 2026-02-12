@@ -107,6 +107,27 @@ graph TD
     P -->|Navigate by ID| K
 ```
 
+
+## Security and Environment variables
+
+In this project is used Auth0 to protect sensitive information and follows the best practices. I create d a profile in the
+[official site of Auth0,](https://auth0.com/) and then I created a new project. Auth0 return to me the credentials (Domain and Client ID) that
+I have to use in the project. Since I don't want that this credential could be visualized easily online, I put them in a new
+file called `.env`. 
+
+Since the project is built with Vite, I used the `VITE_` prefix to ensure these variables are correctly exposed to the client-side code:
+
+```dotenv
+VITE_AUTH0_DOMAIN=your-auth0-domain.auth0.com
+VITE_AUTH0_CLIENT_ID=your-client-id
+```
+To prevent these credentials from being pushed to a public repository, I added the .env file to the `.gitignore` file. 
+This ensures that the secrets remain local to my machine and are never exposed on GitHub.
+
+For the live version hosted on GitHub Pages, I used GitHub Repository Secrets.
+* I manually added the Domain and Client ID to the repository's settings under Secrets and *Variables > Actions*.
+* The automated CI/CD pipeline (GitHub Actions) then injects these secrets into the application during the build process, allowing the production site to authenticate users without ever exposing the keys in the source code.
+
 ## Technical Choices
 
 ### Handle the redirect URI for login / logout
@@ -258,3 +279,59 @@ return(
 )
 ```
 
+### Layout Management: Grid & List
+
+The Digidèx offers two distinct visualization modes to enhance user experience across different devices. 
+This feature is managed through a Boolean state, ensuring a fast and reactive UI transition. 
+- **Grid Layout**: A card-based display where the number of columns dynamically adjusts according to the viewport width. This provides a visually rich experience on larger screens.
+- **List layout**: Each Digimon occupies a full-width "item," optimized for quick scrolling and high readability on mobile devices
+
+It's possibile change visualization thanks to a switch button handled by a status in the `useState` (set by default to true). 
+```JavaScript
+//Set the visualization in position Grid or List
+const[GridDisplay, setGridDisplay] = useState(true);
+```
+
+This state is used in the return (render) to visualize the grid layout if GridDisplay is true, list layout otherwise. 
+```JavaScript
+GridDisplay ? (
+        <DigimonGrid
+                dati={Data}
+                col={{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }}
+        />
+) : (
+        <DigimonList dati={Data} />
+)
+```
+---
+
+### The hardest technical challenge
+
+The most significant challenge during development was managing the synchronization between the application's routing and 
+asynchronous data fetching, particularly when the browser cache is empty.
+
+I identified a **Race Condition** where the React Router's validation logic was executing faster than the API's response 
+for the maxID (the total count of Digimon).Since the maxID state was initialized to 0, any valid request
+(e.g., for Digimon #1) was temporarily flagged as out of bounds (because $1 > 0$). On cleared caches, 
+this resulted in an immediate and incorrect redirect to the Custom 404 page before the data could even arrive.
+
+To ensure the application is robust regardless of network latency, I implemented two layers of protection:
+
+* **Initialization guard**: I utilized the isLoading state from the Auth0 SDK to defer the rendering of the entire routing tree until the authentication session is fully resolved.
+
+* **Logical validation guard**: In the DigimonDetail view, I refined the redirect logic to ensure that a 404 is only triggered after the maxID has been successfully updated from the API:
+
+```JavaScript
+// Validation only occurs once maxID is successfully fetched (> 0)
+if (maxID > 0 && (id > maxID || id < 1)) {
+  return <Navigate to="/404" replace />;
+}
+```
+
+
+
+---
+
+👨‍💻 **Developed by**
+
+**Marco Ottolina** Created for the Web Application Exam course at UniMiB.
