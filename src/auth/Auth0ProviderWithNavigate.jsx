@@ -18,15 +18,9 @@ export const Auth0ProviderWithNavigate = ({ children }) => {
     // Show error if configuration is missing
     if (!domain || !clientId) {
         return (
-            <div style={{ padding: '20px', color: 'red', textAlign: 'center' }}>
-                <h2>⚠️ Auth0 Configuration Error</h2>
-                <p>Auth0 environment variables are missing. Please check your configuration:</p>
-                <ul style={{ textAlign: 'left', maxWidth: '600px', margin: '20px auto' }}>
-                    <li><strong>VITE_AUTH0_DOMAIN:</strong> {domain || '❌ MISSING'}</li>
-                    <li><strong>VITE_AUTH0_CLIENT_ID:</strong> {clientId ? '✅ Set' : '❌ MISSING'}</li>
-                </ul>
-                <p>See <code>AUTH0_SETUP.md</code> for instructions on setting up Auth0.</p>
-                <p>For local development, create a <code>.env</code> file in the project root.</p>
+            <div className="container p-5 text-center">
+                <h2 className="text-danger">Auth0 Configuration Error</h2>
+                <p>Missing VITE_AUTH0_DOMAIN or VITE_AUTH0_CLIENT_ID in .env file.</p>
             </div>
         );
     }
